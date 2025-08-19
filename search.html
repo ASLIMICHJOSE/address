@@ -24,36 +24,136 @@
 <!-- Right: Search -->
 <div class="nav-right">
   <div class="search-section">
-    <div class="search-box">
-      <input type="text" placeholder="Search">
-      <span class="search-icon">&#128269;</span>
-    </div>
-    <div class="search-results">
-      <div class="recent">
-        <h4>Recent</h4>
-        <a href="whitetshirt.html" class="just">White shirts</a>
-      </div>
-      <div class="suggestion">
-        <h4>Suggestion</h4>
-        <p>Bodycon</p>
-        <p>Necklace</p>
-        <p>Linen Trousers</p>
-        <p>Shoes</p>
-      </div>
+   <div class="search-box">
+  <input type="text" placeholder="                                      Search">
+  <img src="img.jpg" alt="" class="search-icon">
+</div>
+   <div class="search-results">
+  <div class="recent">
+    <h4>Recent</h4>
+    <div id="recent-list">
+      <!-- recent searches will be added here by JS -->
     </div>
   </div>
+  <div class="suggestion">
+    <h4>Suggestion</h4>
+    <a href="pants.html" class="just">Pants</a>
+    <p></p>
+    <a href="jacket.html" class="just">Jacket</a>
+    <p></p>
+    <a href="shorts.html" class="just">Shorts</a>
+    <p></p>
+    <a href="tanktop.html" class="just">Tanktop</a>
+  </div>
 </div>
-
 
 <div class="products">
   <h3>YOU MAY BE INTERESTED IN</h3>
   <div class="product-grid">
-    <img src="cats/Cat2.jpg" alt="Shirt">
-    <img src="cats/Cat4.jpg" alt="T-shirt">
-    <img src="cats/Cat3.jpg" alt="Pants">
-    <img src="cats/Cat1.jpg" alt="Shorts">
-  </div>
+    <a href ="pants.html"><img src="cats/Cat2.jpg" alt="Pant"></a>
+    <a href ="shorts.html"><img src="cats/Cat4.jpg" alt="Shorts"></a>
+    <a href ="page.html"><img src="cats/Cat3.jpg" alt="Shorts"></a>
+    <a href ="whitetshirt.html"><img src="cats/Cat1.jpg" alt="Shorts"></a>
 </div>
+
+<script>
+  const searchInput = document.querySelector(".search-box input");
+  const searchIcon = document.querySelector(".search-box img");
+  const searchResults = document.querySelector(".search-results");
+  const recentBox = document.querySelector(".recent");
+  const recentList = document.getElementById("recent-list");
+
+  // Map of search keywords to pages
+  const searchMap = {
+    "pants": "pants.html",
+    "shorts": "shorts.html",
+    "jacket": "jacket.html",
+    "tanktop": "tanktop.html",
+    "white shirt": "whitetshirt.html",
+    "page": "page.html"
+  };
+
+  // Clear recent searches on page load
+  let recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+  localStorage.removeItem("recentSearches");
+
+  function updateRecentUI() {
+    recentList.innerHTML = "";
+
+    if (recentSearches.length === 0) {
+      recentBox.style.display = "block"; // Show recent section
+      recentList.innerHTML = "<p>No recent searches</p>";
+      return;
+    }
+
+    recentBox.style.display = "block"; // Show recent section
+    let last3 = recentSearches.slice(-3).reverse();
+
+    last3.forEach(search => {
+      const link = document.createElement("a");
+      link.href = searchMap[search.toLowerCase()] || "#";
+      link.className = "just";
+      link.textContent = search;
+      recentList.appendChild(link);
+      recentList.appendChild(document.createElement("br"));
+    });
+  }
+
+  function performSearch() {
+    let query = searchInput.value.trim().toLowerCase();
+    if (query === "") return;
+
+    // Update recents (remove duplicate first)
+    recentSearches = recentSearches.filter(item => item.toLowerCase() !== query);
+    recentSearches.push(query);
+
+    // Save only last 3
+    if (recentSearches.length > 3) {
+      recentSearches = recentSearches.slice(-3);
+    }
+
+    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+    updateRecentUI();
+
+    // Redirect if match found
+    if (searchMap[query]) {
+      window.location.href = searchMap[query];
+    } else {
+      alert("No results found for: " + query);
+    }
+
+    searchInput.value = "";
+  }
+
+  // When clicking inside search box
+  searchInput.addEventListener("focus", () => {
+    updateRecentUI();
+    searchResults.style.display = "block";
+  });
+
+  // Hide dropdown when clicking outside
+  document.addEventListener("click", (event) => {
+    if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+      searchResults.style.display = "none";
+    }
+  });
+
+  // Search with Enter key
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      performSearch();
+    }
+  });
+
+  // Search with search icon click
+  searchIcon.addEventListener("click", () => {
+    performSearch();
+  });
+
+  // Hide at first load
+  searchResults.style.display = "none";
+  updateRecentUI();
+</script>
 
 </body>
 </html>
