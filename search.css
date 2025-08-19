@@ -22,6 +22,18 @@ body {
   left: 3%;
   margin-top: 10px; /* bigger value = move down, smaller value = move up */
 }
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 7px; /* space between text and icon */
+}
+
+.search-icon {
+  width: 19px;   /* same as Unicode icon size */
+  height: 19px;  /* keep it square */
+  object-fit: contain; /* prevents distortion */
+  cursor: pointer;
+}
 
 
 .menu-btn .bar {
@@ -52,12 +64,10 @@ header {
   padding: 15px 40px;
   border-bottom: 1px solid #faf9f6;
 }
-
 .menu-icon {
   font-size: 24px;
   cursor: pointer;
 }
-
 .logo1 {
   position: absolute;
   right: 1070px;   /* distance from right side */
@@ -81,18 +91,16 @@ header {
   color: #444;
   margin-bottom: 0px;
    font-family: 'Sansation', sans-serif;
-
 }
 .search-box {
   display: flex;
   align-items: center;
   border-bottom: 2px solid #444;
   padding: 5px 0;
-
 }
 .just{
   text-decoration: none;
-  color: rgb(71, 70, 68);
+  color: rgb(80, 78, 74);
 }
 .search-box input {
   flex: 1;
@@ -103,7 +111,6 @@ header {
   align-items: center;
    font-family: 'Sansation', sans-serif;
 }
-
 .search-icon {
   font-size: 18px;
   color: #777;
@@ -145,4 +152,34 @@ header {
 .product-grid img {
   width: 100%;
   background: #faf9f6;
+}
+/* Hide search results by default */
+.search-results {
+  display: none;  /* stays hidden until JS shows it */
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  max-width :380px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  margin-top: 5px;
+  z-index: 100;
+}
+
+.search-results h4 {
+  margin: 10px 0 px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.search-results a {
+  display: block;
+  padding: 6px 8px;
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border-radius: 4px;
 }
