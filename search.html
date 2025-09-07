@@ -33,15 +33,22 @@
   </div>
 </header>
 
- <span class="back1" onclick="window.location.href='index.html'">Back</span>
-<!-- Right: Search -->
-<div class="nav-right container my-3">
-  <div class="search-section">
-   <div class="search-box">
-  <input type="text" placeholder="                                      Search">
-  
-  <img src="img.jpg" alt="" class="search-icon">
+<div class="search-section">
+  <div class="search-row">
+    <!-- Search Box -->
+    <div class="search-box">
+      <input type="text" placeholder="Search">
+      <img src="img.jpg" alt="" class="search-icon">
+    </div>
+
+    <!-- Back Button (outside but next to search box) -->
+    <span class="back1" onclick="window.location.href='index.html'">Back</span>
+  </div>
 </div>
+
+
+
+
    <div class="search-results">
   <div class="recent">
     <h4>Recent</h4>
@@ -82,105 +89,121 @@
 </div>
 
 <script>
-  const searchInput = document.querySelector(".search-box input");
-  const searchIcon = document.querySelector(".search-box img");
-  const searchResults = document.querySelector(".search-results");
-  const recentBox = document.querySelector(".recent");
-  const recentList = document.getElementById("recent-list");
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.querySelector(".search-box input");
+    const searchIcon = document.querySelector(".search-box img");
+    const searchResults = document.querySelector(".search-results");
+    const recentBox = document.querySelector(".recent");
+    const recentList = document.getElementById("recent-list");
 
-  // Map of search keywords to pages
-  const searchMap = {
-    "pants": "pants.html",
-    "shorts": "shorts.html",
-    "jacket": "jacket.html",
-    "tanktop": "tanktop.html",
-    "white shirt": "whitetshirt.html",
-    "page": "page.html"
-  };
+    // Map of search keywords to pages
+    const searchMap = {
+        "pants": "pants.html",
+        "shorts": "shorts.html",
+        "jacket": "jacket.html",
+        "tanktop": "tanktop.html",
+        "white shirt": "whiteshirt.html",
+        "page": "page.html"
+    };
 
-  // Clear recent searches on page load
-  let recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-  localStorage.removeItem("recentSearches");
+    // Load recent searches from localStorage
+    let recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
-  function updateRecentUI() {
-    recentList.innerHTML = "";
+    // Update the Recent section UI
+    function updateRecentUI() {
+        recentList.innerHTML = "";
 
-    if (recentSearches.length === 0) {
-      recentBox.style.display = "block"; // Show recent section
-      recentList.innerHTML = "<p>No recent searches</p>";
-      return;
+        if (recentSearches.length === 0) {
+            recentList.innerHTML = "<p>No recent searches</p>";
+        } else {
+            let last3 = recentSearches.slice(-3).reverse();
+            last3.forEach(search => {
+                const link = document.createElement("a");
+                link.href = searchMap[search.toLowerCase()] || "#";
+                link.className = "just";
+                link.textContent = search;
+                recentList.appendChild(link);
+                recentList.appendChild(document.createElement("br"));
+            });
+        }
     }
 
-    recentBox.style.display = "block"; // Show recent section
-    let last3 = recentSearches.slice(-3).reverse();
+    // Perform search
+    function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (!query) return;
 
-    last3.forEach(search => {
-      const link = document.createElement("a");
-      link.href = searchMap[search.toLowerCase()] || "#";
-      link.className = "just";
-      link.textContent = search;
-      recentList.appendChild(link);
-      recentList.appendChild(document.createElement("br"));
+        // Update recent searches
+        recentSearches = recentSearches.filter(item => item.toLowerCase() !== query);
+        recentSearches.push(query);
+
+        if (recentSearches.length > 3) {
+            recentSearches = recentSearches.slice(-3);
+        }
+
+        localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+        updateRecentUI();
+
+        // Redirect if match found
+        if (searchMap[query]) {
+            window.location.href = searchMap[query];
+        } else {
+            alert("No results found for: " + query);
+        }
+
+        searchInput.value = "";
+        searchResults.style.display = "none"; // Hide dropdown after search
+    }
+
+    // Show dropdown on click of search input or icon
+    searchInput.addEventListener("click", () => {
+        if (searchResults.style.display !== "block") {
+            updateRecentUI();
+            searchResults.style.display = "block";
+        }
     });
-  }
 
-  function performSearch() {
-    let query = searchInput.value.trim().toLowerCase();
-    if (query === "") return;
+    searchIcon.addEventListener("click", () => {
+        if (searchResults.style.display !== "block") {
+            updateRecentUI();
+            searchResults.style.display = "block";
+        }
+        performSearch();
+    });
 
-    // Update recents (remove duplicate first)
-    recentSearches = recentSearches.filter(item => item.toLowerCase() !== query);
-    recentSearches.push(query);
+    // Search on Enter key
+    searchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") performSearch();
+    });
 
-    // Save only last 3
-    if (recentSearches.length > 3) {
-      recentSearches = recentSearches.slice(-3);
-    }
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", (event) => {
+        if (!searchInput.contains(event.target) && !searchIcon.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
 
-    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+    // Initialize UI
     updateRecentUI();
+});
 
-    // Redirect if match found
-    if (searchMap[query]) {
-      window.location.href = searchMap[query];
-    } else {
-      alert("No results found for: " + query);
+// Menu button toggle
+document.getElementById('menu-btn').addEventListener('click', function () {
+    this.classList.toggle('active');   // Toggles hamburger animation
+    const menu = document.getElementById('menu');
+    if (menu) {
+        menu.classList.toggle('active'); // Toggles menu visibility
     }
+});
 
-    searchInput.value = "";
-  }
 
-  // When clicking inside search box
-  searchInput.addEventListener("focus", () => {
-    updateRecentUI();
-    searchResults.style.display = "block";
-  });
 
-  // Hide dropdown when clicking outside
-  document.addEventListener("click", (event) => {
-    if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
-      searchResults.style.display = "none";
-    }
-  });
 
-  // Search with Enter key
-  searchInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      performSearch();
-    }
-  });
 
-  // Search with search icon click
-  searchIcon.addEventListener("click", () => {
-    performSearch();
-  });
-
-  // Hide at first load
-  searchResults.style.display = "none";
-  updateRecentUI();
 </script>
-<script src="script.js"></script>
+
 <style>
+
 body {
   margin: 0;
   background: #fff;
@@ -192,6 +215,7 @@ body {
 .bar{
    transition: 0.4 ease;
 }
+
 .menu-btn {
   font-size: 24px;
   display: flex;
@@ -205,10 +229,60 @@ body {
   left: 3%;
   margin-top: 10px; /* bigger value = move down, smaller value = move up */
 }
+
 .search-box {
   display: flex;
   gap: 7px; /* space between text and icon */
   text-align: center;
+  position: relative;
+  
+}
+.search-section {
+  position: relative; /* parent wrapper */
+}
+
+/* Make the parent of the search box a positioning context */
+.search-row {
+    position: relative; /* dropdown will now position relative to this */
+    text-align: center; /* Center the search input */
+    margin-top: 20px; /* Space below the header */
+}
+
+/* Search input styling */
+.search-row input {
+    width: 350px; /* Set a reasonable width */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Dropdown styling */
+.search-results {
+    display: none;
+    position: absolute; /* float above normal flow */
+    top: 220px; /* Directly below the search input */
+    left: 48%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    width: 300px; /* Match the input width */
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 250px; /* scroll if content exceeds height */
+    overflow-y: auto;
+}
+
+/* Links inside dropdown */
+.search-results a {
+    display: block;
+    padding: 5px 0;
+    text-decoration: none;
+    color: #333;
+}
+.search-results a:hover {
+    background: #f0f0f0;
 }
 
 .search-icon {
@@ -228,6 +302,7 @@ body {
   border-radius: 2px;
   transition: transform 0.4s, opacity 0.4s;
 }
+
 .menu-btn.active .bar:nth-child(1) {
   transform: translateY(11px) rotate(55deg);
 }
@@ -247,10 +322,12 @@ header {
   padding: 15px 40px;
   border-bottom: 1px solid #fff;
 }
+
 .menu-icon {
   font-size: 24px;
   cursor: pointer;
 }
+
 .logo1 {
   font-family: 'Sansation', sans-serif;
   font-size: 40px;
@@ -273,16 +350,20 @@ header {
   margin-bottom: 0px;
    font-family: 'Sansation', sans-serif;
 }
+
 .search-box {
   display: flex;
   align-items: center;
   border-bottom: 2px solid #444;
   padding: 5px 0;
+  max-width: 400px;
 }
+
 .just{
   text-decoration: none;
   color: rgb(80, 78, 74);
 }
+
 .search-box input {
   flex: 1;
   border: none;
@@ -292,20 +373,26 @@ header {
   align-items: center;
    font-family: 'Sansation', sans-serif;
 }
+
 .search-icon {
   font-size: 18px;
   color: #777;
   cursor: pointer;
   margin-left: 10px;
 }
+
+.search-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* centers row */
+  gap: 15px;                /* space between search box and Back */
+}
+
 .back1 {
-  display: block;
   font-size: 16px;
   color: #b3b3b3;
   cursor: pointer;
-  margin-left: 1000px;
-  position: relative;
-  top: 70px; /* positive moves it down, negative moves it up */
+  white-space: nowrap;  /* prevent wrapping on small screens */
 }
 
 .back1:hover {
@@ -368,16 +455,16 @@ header {
   text-decoration: none;
   border-radius: 4px;
 }
-/* ✅ Responsive fix for Back button */
-@media (max-width: 768px) {
+/* Tablet and below */
+@media (max-width: 768px){
   .back1 {
-    margin-left: 0 !important;   /* reset large margin */
-    top: 10px !important;        /* move closer to header */
-    text-align: right;           /* keep it aligned properly */
+    margin-left: auto;      /* push to the right */
+    margin-right: 20px;     /* spacing from edge */
+    top: 20px;              /* reduce vertical offset */
     display: inline-block;
+    position: relative;
   }
 }
-
 /* ✅ Product grid responsive fix */
 @media (min-width: 992px) {
   .product-grid {
@@ -435,16 +522,72 @@ header {
     margin-left: 120px;   /* medium gap for tablets */
   }
 }
-@media (max-width: 320px){
-  .search-box{
-    max-width: 50%;
-    text-align: center;   /* ✅ center text inside */
-    gap: 7px;
-    margin:0 auto;    /* ✅ center the box itself */
+
+@media (max-width: 426px){
+  .search-box {
+    max-width: 70%;          
+    margin: 0 auto;                /* center the whole box */
     display: flex;
-  
+    align-items: center;
+    justify-content: center; 
+    gap: 0;
+    flex-wrap: nowrap;
+    
+  }
+.back1 {
+    font-size: 12px;
+    margin-left: 6px;  /* tighter spacing on small screens */
+  }
+  .search-box input {
+    text-align: center;
+    font-size: 14px;         /* shrink text size to fit */
+    flex: 1;                 /* take available space */
+    min-width: 0;            /* prevent overflow */
   }
 
+  .search-box img {
+    width: 16px;             /* smaller icon */
+    height: 16px;
+    flex-shrink: 0;          /* prevent icon from shrinking */
+    margin-left: 3px;        /* tiny space only */
+  }
+}
+
+
+
+.search-box input {
+    text-align: center;   
+  }
+
+.search-icon {          /* assuming your icon is <i class="..."> */
+    margin: 0;             /* remove unwanted margins */
+    padding: 0;            /* remove extra padding */
+  }
+
+  @media (max-width: 320px){
+  .search-box {
+    max-width: 70%;          /* give it a little more breathing room */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* center as a group */
+    gap: 0;                  /* no gap at all */
+    flex-wrap: nowrap;       /* 🚀 force input + icon to stay in one row */
+  }
+
+  .search-box input {
+    text-align: center;
+    font-size: 14px;         /* shrink text size to fit */
+    flex: 1;                 /* take available space */
+    min-width: 0;            /* prevent overflow */
+  }
+
+  .search-box img {
+    width: 16px;             /* smaller icon */
+    height: 16px;
+    flex-shrink: 0;          /* prevent icon from shrinking */
+    margin-left: 3px;        /* tiny space only */
+  }
 }
 
 </style>
