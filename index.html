@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change Address - ZYRAA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="topbar">
+    <div class="menu">&#9776;</div>
+    <div class="logo">ZYRAA</div>
+  </header>
+
+  <!-- Form Section -->
+  <main class="container">
+    <h2>Change Address</h2>
+
+    <form id="addressForm">
+      <div class="row">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+      </div>
+
+      <textarea id="address" placeholder="Address (Area and street)" required></textarea>
+      
+      <input type="text" id="pincode" placeholder="Pincode" required>
+
+      <button type="submit" class="save-btn">Save Address</button>
+      <button type="button" class="back-btn" onclick="goBack()">Back</button>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
