@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Change Address - ZYRAA</title>
   <link rel="stylesheet" href="style.css">
@@ -14,23 +13,28 @@
     <div class="logo">ZYRAA</div>
   </header>
 
-  <!-- Form Section -->
-  <main class="container">
-    <h2>Change Address</h2>
+  <!-- Content -->
+  <main class="content">
+    <section class="form-section">
+      <h2>Change Address</h2> <!-- same typo as in image -->
 
-    <form id="addressForm">
-      <div class="row">
-        <input type="text" id="name" placeholder="Name" required>
-        <input type="tel" id="phone" placeholder="Phone Number" required>
-      </div>
+      <form id="addressForm">
+        <div class="row">
+          <input type="text" id="name" placeholder="Name" required>
+          <input type="tel" id="phone" placeholder="Phone Number" required>
+        </div>
 
-      <textarea id="address" placeholder="Address (Area and street)" required></textarea>
-      
-      <input type="text" id="pincode" placeholder="Pincode" required>
+        <textarea id="address" placeholder="Address (Area and street)" required></textarea>
+        
+        <input type="text" class ="pincod" id="pincode" placeholder="Pincode" required>
 
-      <button type="submit" class="save-btn">Save Address</button>
-      <button type="button" class="back-btn" onclick="goBack()">Back</button>
-    </form>
+        <button type="submit" class="save-btn">Save at Address</button>
+        <button type="button" class="back-btn" onclick="goBack()">Back</button>
+      </form>
+    </section>
+
+    <!-- Right blank divider like in screenshot -->
+    <div class="divider"></div>
   </main>
 
   <script src="script.js"></script>
