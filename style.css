@@ -1,0 +1,786 @@
+/* Import Sansation font */
+@import url('https://fonts.googleapis.com/css2?family=Sansation&display=swap');
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Sansation', sans-serif;
+}
+
+body {
+  background: #fff;
+  color: #514a4a;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 20px;
+  border-bottom: 1px solid #000000;
+}
+
+.menu {
+  font-size: 22px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.content {
+  display: flex;
+  padding: 60px 50px;
+  min-height: calc(100vh - 60px); /* full height under header */
+}
+
+
+.form-section {
+  flex: 1.5;
+  max-width: none;
+  height: auto;        /* instead of full viewport */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+
+.form-section h2 {
+  margin-bottom: 40px;
+  font-size: 25px;
+  font-weight: 50;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.row {
+  display: flex;
+  gap: 100px;
+}
+
+.row input {
+  flex: 1;
+}
+
+/* Inputs */
+input, textarea {
+  padding: 10px;
+  border: 1px solid #000;
+  font-size: 15px;
+  width: 500px;
+
+}
+
+textarea {
+  height: 150px;
+  resize: none;
+}
+
+.pincod {
+  width: 44%;
+}
+
+.save-btn {
+  background: #fff;
+  border: 1px solid #000;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 40%;
+  margin: 0 auto;        /* centers the button */
+  display: block;        /* ensures margin works */
+  text-align: center;    /* keeps text centered */
+  margin-left: 150px;
+}
+
+.save-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+.back-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 40%;
+  margin: 0 auto;        /* centers the button */
+  display: block;        /* ensures margin works */
+  text-align: center;    /* keeps text centered */
+   margin-left: 150px;
+}
+
+/* Divider (the vertical line at right) */
+.divider {
+  border-left: 1px solid #000;
+  margin-left: 30px;
+  flex: 1;
+}
+
+.divider {
+  border-left: 1px solid #000;
+  margin-left: 30px;
+  width: 900px;   /* fixed width */
+  flex: 0 0 auto; /* disable stretching */
+}
+
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+/* ==========================
+   RESET + BASE
+========================== */
+* {
+  text-decoration: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #fff;
+  font-family: 'Sansation', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+#head {
+  margin-top: 10px;
+}
+
+/* ==========================
+   HEADER
+========================== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 30px;
+  background-color: #fff;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#hello {
+  font-size: 30px;
+  font-weight: 350;
+  margin: 0;
+  padding-left: 100px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.header-right span {
+  cursor: pointer;
+}
+
+.header-line {
+  border: none;
+  border-top: 1px solid #b3acac;
+  width: 100%;        /* reduce line width */
+  margin: 2px auto;    /* center it */
+}
+
+
+
+#openSearch {
+  transform: translateX(18px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  padding-bottom: 5px;
+  display: inline-block;
+  width: 150px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* ==========================
+   MENU BUTTON
+========================== */
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-right: 50px;
+}
+
+.menu-btn .bar {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: #222;
+  border-radius: 2px;
+  transition: transform 0.4s, opacity 0.4s;
+}
+
+.menu-btn.active .bar:nth-child(1) {
+  transform: translateY(11px) rotate(55deg);
+}
+
+.menu-btn.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn.active .bar:nth-child(3) {
+  transform: translateY(-11px) rotate(-55deg);
+}
+
+/* ==========================
+   DROPDOWN
+========================== */
+.dropdown {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  background-color: #fff;
+  padding-left: 15px;
+  transition: max-height 0.3s ease;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 10px 0;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  color: #000;
+}
+
+.dropdown .arrow {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  padding: 10px;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dropdown.active .arrow {
+  transform: rotate(-90deg);
+}
+
+/* ==========================
+   SLIDE MENU
+========================== */
+.slide-menu {
+  position: fixed;
+  top: 0;
+  left: -360px;
+  width: 300px;
+  height: 100%;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+
+  /* Hide scrollbar but keep scroll */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.slide-menu::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.slide-menu.show {
+  left: 0;
+}
+
+.slide-menu h2 {
+  font-size: 35px;
+  font-weight: bold;
+  margin-top: 45px;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.slide-menu a {
+  color: #333;
+  font-size: 20px;
+  padding: 10px 0;
+  display: block;
+  margin: 0 0 0 15px;
+  line-height: 1.5;
+}
+
+.slide-menu a:hover {
+  color: #000;
+}
+
+.slide-menu .close-btn {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #775b5b;
+}
+
+/* ==========================
+   MOBILE NAV (Default hidden)
+========================== */
+.mobile-nav {
+  display: none;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+/* Tablet View (768px – 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  header {
+    padding: 4px 20px;
+  }
+
+  .header-left {
+    gap: 12px;
+  }
+
+  #hello {
+    font-size: 28px;
+    padding-left: 80px;
+  }
+
+  .header-right {
+    gap: 40px;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #openSearch {
+    width: 120px;
+    transform: translateX(10px);
+  }
+
+  .menu-btn {
+    padding-right: 30px;
+  }
+
+  .mobile-nav {
+    display: none; /* hide mobile nav on tablet */
+  }
+}
+
+/* Desktop View (≥1025px) */
+@media (min-width: 1025px) {
+  .mobile-nav {
+    display: none;
+  }
+}
+
+/* Mobile View (≤767px) */
+@media (max-width: 767px) {
+  .header-right {
+    display: none;
+  }
+
+  .menu-btn {
+    display: flex;
+  }
+
+  .header-left {
+    gap: 10px;
+  }
+
+  #hello {
+    font-size: 26px;
+    padding-left: 20px;
+  }
+
+  .slide-menu-nav {
+    display: block;
+    width: 240px;
+    text-align: left;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px 0;
+    margin: 0 0 0 15px;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .slide-menu-nav:hover {
+    color: #000;
+  }
+
+  #openSearchMobile.slide-menu-nav {
+    margin: 0 0 0 15px;
+    transform: none;
+    border-bottom: none;
+    width: auto;
+  }
+
+  .mobile-nav {
+    display: block !important;
+  }
+}
+
+/* Extra Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 4px 10px;
+  }
+
+  .header-left {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-left: 0;
+  }
+
+  #hello {
+    font-size: 24px;
+    padding-left: 10px;
+    margin-top: 8px;
+  }
+}
+
+.helo{
+  font-weight: 150px;
+}
+
+/* Name field */
+.input-name {
+  font-size: 18px;
+  padding: 10px 14px;
+  height: 42px;
+  width: 250px;   /* same as pincode */
+}
+
+/* Phone field */
+.input-phone {
+  font-size: 20px;
+  padding: 12px 14px;
+  height: 46px;
+  width: 250px;   /* same as pincode */
+}
+
+/* Pincode field */
+.input-pincode {
+  font-size: 16px;
+  padding: 8px 12px;
+  height: 38px;
+  width: 250px;
+}
+
+
+/* Placeholders */
+.input-name::placeholder {
+  font-size: 16px;
+  width: 100%;
+}
+.input-phone::placeholder {
+    width: 100%;
+  font-size: 18px;
+}
+.input-pincode::placeholder {
+    width: 100%;
+  font-size: 14px;
+}
+
+
+/* Override row flex behaviour */
+.input-name,
+.input-phone,
+.input-pincode {
+  flex: 0 0 auto !important; /* prevent auto-growing */
+  width: 200px !important;   /* change to your desired smaller size */
+}
+
+/* Hide map on small screens */
+@media (max-width: 767px) {
+  .divider {
+    display: none; /* hides the map section */
+  }
+
+  .form-section {
+    flex: 1;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  input, textarea {
+    width: 100% !important; /* make inputs full width */
+  }
+
+  .save-btn,
+  .back-btn {
+    width: 100%;   /* buttons span full width */
+    margin-left: 0;
+  }
+}
+/* Mobile View (≤767px) */
+@media (max-width: 767px) {
+  .divider {
+    display: none; /* hides map */
+  }
+
+  .form-section {
+    flex: 1;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .row {
+    flex-direction: column; /* stack by default */
+    gap: 20px;
+  }
+
+  input, textarea {
+    width: 100% !important;
+  }
+
+  .save-btn,
+  .back-btn {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+
+
+@media(max-width:426px){
+  .content {
+  display: flex;
+  padding: 10px 0px;
+  min-height: calc(100vh - 60px); /* full height under header */
+}
+}
+/* Always hide desktop nav (Search on right) below 1024px */
+@media (max-width: 1024px) {
+  .header-right {
+    display: none !important;
+  }
+
+  .menu-btn {
+    display: flex !important;
+  }
+}
+
+/* Ensure slide-menu works the same on all mobile/tablet */
+@media (max-width: 1024px) {
+  .slide-menu {
+    width: 280px;  /* consistent width */
+  }
+
+  .slide-menu h2 {
+    font-size: 28px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+
+  .slide-menu a {
+    font-size: 18px;
+  }
+}
+@media(max-width:426px){
+ form {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+} 
+}
+
+/* Mobile view adjustment (≤426px) */
+@media (max-width: 426px) {
+  .row {
+    flex-direction: row;      /* place side by side */
+    gap: 15.5px;                /* small gap */
+  }
+
+  .input-name,
+  .input-phone {
+    width: 48% !important;    /* each takes about half width */
+    font-size: 16px;          /* slightly smaller font */
+    padding: 8px 2px;        /* reduce padding */
+    height: 40px;             /* smaller height */
+  }
+
+  .row input {
+    flex: 1;                  /* ensures both share space */
+  }
+}
+@media(max-width:426px){
+  .header-line {
+  border: none;
+  border-top: 1px solid #0c0c0c;
+  width: 95%;        /* reduce line width */
+  margin: 2px auto;    /* center it */
+}
+}
+@media(max-width:426px){
+  #hello {
+  font-size: 30px;
+  font-weight: 650;
+  margin-left: -60px;
+  padding-left: 100px;
+}
+}
+@media (max-width: 426px) {
+  textarea {
+    height: 100px !important;  /* reduce height */
+  }
+}
+
+@media(max-width:426px){
+ .save-btn {
+  background: #fff;
+  border: 1px solid #000;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 40%;
+  margin: 0 auto;        /* centers the button */
+  display: block;        /* ensures margin works */
+  text-align: center;    /* keeps text centered */
+  margin-left: 110px;
+}
+}
+
+@media(max-width:426px){
+ .back-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 40%;
+  margin: 0 auto;        /* centers the button */
+  display: block;        /* ensures margin works */
+  text-align: center;    /* keeps text centered */
+   margin-left: 110px;
+}
+}
+/* Mobile View (≤426px) - Add shadows for inputs and buttons */
+@media (max-width: 426px) {
+  input,
+  textarea,
+  .input-name,
+  .input-phone,
+  .input-pincode,
+  .save-btn,
+  .back-btn {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* subtle shadow */
+
+  }
+}
+
+/* Special adjustments only for 321px */
+@media (max-width: 321px) {
+  .input-name,
+  .input-phone {
+    width: 47.5% !important;   /* slightly smaller so both fit better */
+    font-size: 14px;         /* reduce font size a bit */
+    padding: 6px 8px;        /* reduce padding */
+    height: 36px;            /* slightly shorter */
+  }
+}
+
+@media (max-width: 321px) {
+  #hello {
+  font-size: 30px;
+  font-weight: 650;
+  margin-left: -90px;
+  padding-left: 100px;
+  }
+}
+@media (max-width: 321px) {
+ .save-btn {
+  background: #fff;
+  border: 1px solid #000;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 50%;
+  margin: 0 auto;        /* centers the button */
+  display: block;        /* ensures margin works */
+  text-align: center;    /* keeps text centered */
+  margin-left: 70px;
+}
+}
+@media (max-width: 321px) {
+ .back-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 50%;
+  margin: 0 auto;        /* centers the button */
+  display: block;        /* ensures margin works */
+  text-align: center;    /* keeps text centered */
+   margin-left: 70px;
+}
+}
+/* Special adjustments only for 321px */
+@media (max-width: 321px) {
+  .input-name,
+  .input-phone {
+    width: 47% !important;   /* keep side by side */
+    font-size: 14px;
+    padding: 6px 8px;
+    height: 36px;
+  }
+
+  .input-pincode {
+    font-size: 14px;         /* reduce text size */
+    padding: 6px 8px;        /* smaller padding */
+    height: 36px;            /* shorter input height */
+     width: 60% !important;   /* keep side by side */
+  }
+}
