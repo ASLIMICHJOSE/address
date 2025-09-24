@@ -1,4 +1,4 @@
-// Handle form submit
+// =================== FORM HANDLING ===================
 document.getElementById("addressForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
@@ -15,71 +15,82 @@ function goBack() {
   window.history.back();
 }
 
-// Initialize map
-var map = L.map('map').setView([20.5937, 78.9629], 5); // India center
-
-// Load tiles (OpenStreetMap free layer)
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
-}).addTo(map);
-
-// Marker
-var marker = L.marker([20.5937, 78.9629]).addTo(map);
-
-// Function to update location from address (forward geocode)
-function updateLocation(address) {
- fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=in&q=${encodeURIComponent(address)}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data && data[0]) {
-        let lat = parseFloat(data[0].lat);
-        let lon = parseFloat(data[0].lon);
-        map.setView([lat, lon], 15);
-        marker.setLatLng([lat, lon]);
-      }
-    })
-    .catch(err => console.error("Error fetching location:", err));
-}
-
-// Hook to your inputs
+// =================== GOOGLE MAP UPDATER ===================
+const mapFrame = document.getElementById("mapFrame");
 const addressField = document.getElementById("address");
 const pincodeField = document.getElementById("pincode");
 
 function trackAddress() {
-  const fullAddress = `${addressField.value}, ${pincodeField.value}, India`;
-
+  const fullAddress = `${addressField.value} ${pincodeField.value}`;
   if (fullAddress.trim() !== "") {
-    updateLocation(fullAddress);
+    mapFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`;
   }
 }
 
 addressField.addEventListener("input", trackAddress);
 pincodeField.addEventListener("input", trackAddress);
 
-// Function to get address from map click (reverse geocode)
-function getAddressFromCoords(lat, lon) {
-  fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data && data.display_name) {
-        // Fill textarea with full address
-        document.getElementById("address").value = data.display_name;
+// =================== NAVIGATION MENU ===================
+const menuBtn = document.getElementById('menu-btn');
+const slideMenu = document.getElementById('slideMenu');
+const closeMenuBtn = document.getElementById('closeMenu'); // ✅ X button
 
-        // If postcode exists, fill it
-        if (data.address && data.address.postcode) {
-          document.getElementById("pincode").value = data.address.postcode;
-        }
-      }
-    })
-    .catch(err => console.error("Error fetching reverse geocode:", err));
+// Overlay
+const overlay = document.createElement('div');
+overlay.className = 'overlay';
+document.body.appendChild(overlay);
+
+// Toggle menu open/close
+menuBtn.addEventListener('click', () => {
+  const isActive = menuBtn.classList.toggle('active');
+  slideMenu.classList.toggle('show', isActive);
+  overlay.classList.toggle('show', isActive);
+  menuBtn.setAttribute("aria-expanded", isActive);
+});
+
+// Close with X button
+closeMenuBtn.addEventListener('click', () => {
+  slideMenu.classList.remove('show');
+  menuBtn.classList.remove('active');
+  overlay.classList.remove('show');
+  menuBtn.setAttribute("aria-expanded", "false");
+});
+
+// Overlay click closes menu
+overlay.addEventListener('click', () => {
+  slideMenu.classList.remove('show');
+  menuBtn.classList.remove('active');
+  overlay.classList.remove('show');
+  menuBtn.setAttribute("aria-expanded", "false");
+});
+
+// Dropdown toggle
+function toggleDropdown(element) {
+  element.classList.toggle('active');
+  document.querySelectorAll('.slide-menu .dropdown').forEach(other => {
+    if (other !== element) other.classList.remove('active');
+  });
 }
 
-// Listen for map clicks
-map.on("click", function(e) {
-  let lat = e.latlng.lat;
-  let lon = e.latlng.lng;
+// Close dropdowns when clicking outside
+document.addEventListener('click', (event) => {
+  const isInsideDropdown = event.target.closest('.dropdown');
+  if (!isInsideDropdown) {
+    document.querySelectorAll('.slide-menu .dropdown').forEach(dropdown => {
+      dropdown.classList.remove('active');
+    });
+  }
+});
 
-  marker.setLatLng([lat, lon]);   // move marker
-  map.setView([lat, lon], 15);    // zoom to click
-  getAddressFromCoords(lat, lon); // fetch & fill address
+// =================== SEARCH REDIRECTS ===================
+document.getElementById("openSearch").addEventListener("click", () => {
+  window.location.href = "search.html";
+});
+
+document.getElementById("openSearchMobile").addEventListener("click", () => {
+  window.location.href = "search.html";
+  slideMenu.classList.remove('show');
+  menuBtn.classList.remove('active');
+  overlay.classList.remove('show');
+  menuBtn.setAttribute("aria-expanded", "false");
 });
