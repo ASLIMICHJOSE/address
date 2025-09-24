@@ -80,12 +80,12 @@
 
       <form id="addressForm">
         <div class="row">
-          <input type="text" id="name" placeholder="Name" required>
-          <input type="tel" id="phone" placeholder="Phone Number" required>
+         <input type="text" id="name" class="input-name" placeholder="Enter your name">
+         <input type="tel" id="phone" class="input-phone" placeholder="Enter mobile number">
         </div>
 
         <textarea id="address" placeholder="Address (Area and street)" required></textarea>
-        <input type="text" class="pincod" id="pincode" placeholder="Pincode" required>
+      <input type="text" id="pincode" class="input-pincode" placeholder="Enter pincode">
 
         <button type="submit" class="save-btn">Save at Address</button>
         <button type="button" class="back-btn" onclick="goBack()">Back</button>
@@ -111,27 +111,3 @@
 
 </body>
 </html>
-
-        <input type="text" class="pincod" id="pincode" placeholder="Pincode" required>
-
-
-        <button type="submit" class="save-btn">Save at Address</button>
-        <button type="button" class="back-btn" onclick="goBack()">Back</button>
-      </form>
-    </section>
-
-   <!-- Right blank divider like in screenshot -->
-<div class="divider">
-  <div id="map"></div>
-</div>
-
-<!-- Google Maps Script -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-
-  <script src="script.js"></script>
-</body>
-</html>
-
