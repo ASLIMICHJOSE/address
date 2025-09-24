@@ -62,7 +62,7 @@ body {
 form {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 50px;
 }
 
 .row {
@@ -79,7 +79,8 @@ input, textarea {
   padding: 10px;
   border: 1px solid #000;
   font-size: 15px;
-  width: 100%;
+  width: 500px;
+
 }
 
 textarea {
@@ -97,10 +98,11 @@ textarea {
   padding: 10px;
   cursor: pointer;
   transition: 0.3s;
-  width: 50%;
+  width: 40%;
   margin: 0 auto;        /* centers the button */
   display: block;        /* ensures margin works */
   text-align: center;    /* keeps text centered */
+  margin-left: 150px;
 }
 
 .save-btn:hover {
@@ -114,10 +116,11 @@ textarea {
   border: none;
   padding: 10px;
   cursor: pointer;
-  width: 50%;
+  width: 40%;
   margin: 0 auto;        /* centers the button */
   display: block;        /* ensures margin works */
   text-align: center;    /* keeps text centered */
+   margin-left: 150px;
 }
 
 /* Divider (the vertical line at right) */
@@ -130,9 +133,10 @@ textarea {
 .divider {
   border-left: 1px solid #000;
   margin-left: 30px;
-  flex: 1;
-  display: flex;
+  width: 900px;   /* fixed width */
+  flex: 0 0 auto; /* disable stretching */
 }
+
 
 #map {
   width: 100%;
@@ -483,4 +487,52 @@ header {
 
 .helo{
   font-weight: 150px;
+}
+
+/* Name field */
+.input-name {
+  font-size: 18px;
+  padding: 10px 14px;
+  height: 42px;
+  width: 250px;   /* same as pincode */
+}
+
+/* Phone field */
+.input-phone {
+  font-size: 20px;
+  padding: 12px 14px;
+  height: 46px;
+  width: 250px;   /* same as pincode */
+}
+
+/* Pincode field */
+.input-pincode {
+  font-size: 16px;
+  padding: 8px 12px;
+  height: 38px;
+  width: 250px;
+}
+
+
+/* Placeholders */
+.input-name::placeholder {
+  font-size: 16px;
+  width: 100%;
+}
+.input-phone::placeholder {
+    width: 100%;
+  font-size: 18px;
+}
+.input-pincode::placeholder {
+    width: 100%;
+  font-size: 14px;
+}
+
+
+/* Override row flex behaviour */
+.input-name,
+.input-phone,
+.input-pincode {
+  flex: 0 0 auto !important; /* prevent auto-growing */
+  width: 200px !important;   /* change to your desired smaller size */
 }
