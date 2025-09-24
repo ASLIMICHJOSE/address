@@ -54,14 +54,23 @@ closeMenuBtn.addEventListener('click', () => {
   menuBtn.classList.remove('active');
   overlay.classList.remove('show');
   menuBtn.setAttribute("aria-expanded", "false");
+
+  // ✅ Collapse all dropdowns when menu closes
+  document.querySelectorAll('.slide-menu .dropdown').forEach(dropdown => {
+    dropdown.classList.remove('active');
+  });
 });
 
-// Overlay click closes menu
-overlay.addEventListener('click', () => {
-  slideMenu.classList.remove('show');
-  menuBtn.classList.remove('active');
-  overlay.classList.remove('show');
-  menuBtn.setAttribute("aria-expanded", "false");
+// Close dropdowns when clicking outside slide menu
+document.addEventListener('click', (event) => {
+  const isInsideMenu = event.target.closest('#slideMenu');
+  const isMenuButton = event.target.closest('#menu-btn');
+
+  if (!isInsideMenu && !isMenuButton) {
+    document.querySelectorAll('.slide-menu .dropdown').forEach(dropdown => {
+      dropdown.classList.remove('active');
+    });
+  }
 });
 
 // Dropdown toggle
@@ -71,16 +80,6 @@ function toggleDropdown(element) {
     if (other !== element) other.classList.remove('active');
   });
 }
-
-// Close dropdowns when clicking outside
-document.addEventListener('click', (event) => {
-  const isInsideDropdown = event.target.closest('.dropdown');
-  if (!isInsideDropdown) {
-    document.querySelectorAll('.slide-menu .dropdown').forEach(dropdown => {
-      dropdown.classList.remove('active');
-    });
-  }
-});
 
 // =================== SEARCH REDIRECTS ===================
 document.getElementById("openSearch").addEventListener("click", () => {
